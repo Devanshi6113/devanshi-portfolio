@@ -265,7 +265,11 @@
     transition: border-color 0.3s, transform 0.3s;
   }
   .skill-group:hover { border-color: var(--accent); transform: translateY(-6px); }
-  .skill-group-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  
+  /* Modern SVG Icons for Skills */
+  .skill-group-icon { margin-bottom: 1rem; color: var(--accent); }
+  .skill-group-icon svg { width: 32px; height: 32px; }
+  
   .skill-group-title {
     font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
     margin-bottom: 1.25rem; color: var(--text);
@@ -327,7 +331,11 @@
     pointer-events: none;
   }
   .project-card:hover { border-color: var(--accent); transform: translateY(-8px); }
-  .project-icon { font-size: 2rem; }
+  
+  /* Modern SVG Icons for Projects */
+  .project-icon { color: var(--accent2); margin-bottom: 0.5rem; }
+  .project-icon svg { width: 36px; height: 36px; }
+
   .project-title {
     font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text);
   }
@@ -571,7 +579,9 @@
   </div>
   <div class="skills-categories">
     <div class="skill-group reveal">
-      <div class="skill-group-icon">🖥️</div>
+      <div class="skill-group-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+      </div>
       <div class="skill-group-title">Frontend</div>
       <div class="skill-tags">
         <span class="skill-tag">React.js</span>
@@ -581,7 +591,9 @@
       </div>
     </div>
     <div class="skill-group reveal">
-      <div class="skill-group-icon">⚙️</div>
+      <div class="skill-group-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+      </div>
       <div class="skill-group-title">Backend</div>
       <div class="skill-tags">
         <span class="skill-tag">Node.js</span>
@@ -592,7 +604,9 @@
       </div>
     </div>
     <div class="skill-group reveal">
-      <div class="skill-group-icon">☁️</div>
+      <div class="skill-group-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+      </div>
       <div class="skill-group-title">Cloud & Infra</div>
       <div class="skill-tags">
         <span class="skill-tag">AWS EC2</span>
@@ -601,7 +615,9 @@
       </div>
     </div>
     <div class="skill-group reveal">
-      <div class="skill-group-icon">🗄️</div>
+      <div class="skill-group-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+      </div>
       <div class="skill-group-title">Databases</div>
       <div class="skill-tags">
         <span class="skill-tag">MongoDB</span>
@@ -610,7 +626,9 @@
       </div>
     </div>
     <div class="skill-group reveal">
-      <div class="skill-group-icon">🔧</div>
+      <div class="skill-group-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+      </div>
       <div class="skill-group-title">Architecture</div>
       <div class="skill-tags">
         <span class="skill-tag">Full Stack Design</span>
@@ -619,7 +637,9 @@
       </div>
     </div>
     <div class="skill-group reveal">
-      <div class="skill-group-icon">💡</div>
+      <div class="skill-group-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      </div>
       <div class="skill-group-title">Soft Skills</div>
       <div class="skill-tags">
         <span class="skill-tag">Problem Solving</span>
@@ -672,7 +692,9 @@
   </div>
   <div class="projects-grid">
     <div class="project-card reveal">
-      <div class="project-icon">🏨</div>
+      <div class="project-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+      </div>
       <div class="project-title">Hotel Room Booking System</div>
       <div class="project-desc">A full-featured hotel booking platform with room availability checking, booking management, and responsive UI built during my trainee role.</div>
       <div class="project-stack">
@@ -683,7 +705,9 @@
       </div>
     </div>
     <div class="project-card reveal">
-      <div class="project-icon">⚡</div>
+      <div class="project-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
       <div class="project-title">AWS-Deployed Web App</div>
       <div class="project-desc">Production-grade web application deployed on AWS EC2 with live server management, scalable backend APIs, and MongoDB data layer.</div>
       <div class="project-stack">
@@ -694,7 +718,9 @@
       </div>
     </div>
     <div class="project-card reveal">
-      <div class="project-icon">🔗</div>
+      <div class="project-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      </div>
       <div class="project-title">RESTful API Platform</div>
       <div class="project-desc">Scalable REST API backend with Express.js, secure data flow between client and server, and optimized database queries for performance.</div>
       <div class="project-stack">
