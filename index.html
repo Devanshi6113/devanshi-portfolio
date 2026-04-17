@@ -20,11 +20,11 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   
-  html { scroll-behavior: smooth; overflow-x: hidden; }
+  html { scroll-behavior: smooth; overflow-x: hidden; background: var(--bg); }
   
   body {
     font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
+    background: transparent;
     color: var(--text);
     overflow-x: hidden;
     cursor: none; /* Custom cursor for desktop */
@@ -57,13 +57,11 @@
     background-size: cover;
     background-position: center 15%; /* Face focus me rakhne ke liye */
     background-repeat: no-repeat;
-    opacity: 0.4; /* Spider se thoda zyada bright taaki clearly dikhe */
-    z-index: -998; /* Spidey ke ekdum upar */
+    opacity: 0.9; 
+    z-index: -998; 
     pointer-events: none;
-    /* CSS Magic: Cursor ke aas paas hi sirf image dikhegi */
-    -webkit-mask-image: radial-gradient(circle 180px at var(--mouse-x, -500px) var(--mouse-y, -500px), black 40%, transparent 100%);
-    mask-image: radial-gradient(circle 180px at var(--mouse-x, -500px) var(--mouse-y, -500px), black 40%, transparent 100%);
-    transition: opacity 0.2s ease-out;
+    -webkit-mask-image: radial-gradient(circle 0px at -500px -500px, black 40%, transparent 100%);
+    mask-image: radial-gradient(circle 0px at -500px -500px, black 40%, transparent 100%);
   }
 
   /* Custom cursor */
@@ -802,7 +800,7 @@
     });
   });
 
-  // Custom cursor
+  // Custom cursor and Flashlight Effect
   const cursor = document.getElementById('cursor');
   const trail = document.getElementById('cursorTrail');
   const userBg = document.getElementById('user-bg');
@@ -813,9 +811,10 @@
     trail.style.left = e.clientX + 'px';
     trail.style.top = e.clientY + 'px';
     
-    // Aapki pic ko cursor position par reveal karna
-    userBg.style.setProperty('--mouse-x', e.clientX + 'px');
-    userBg.style.setProperty('--mouse-y', e.clientY + 'px');
+    // Aapki pic ko cursor position par reveal karna (JavaScript Se 100% Fix)
+    const maskString = `radial-gradient(circle 200px at ${e.clientX}px ${e.clientY}px, black 45%, transparent 100%)`;
+    userBg.style.webkitMaskImage = maskString;
+    userBg.style.maskImage = maskString;
   });
   
   document.querySelectorAll('a, button, .stat-card, .skill-group, .project-card, .edu-card').forEach(el => {
