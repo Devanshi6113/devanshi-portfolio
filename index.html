@@ -20,36 +20,50 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   
-  html { 
-    scroll-behavior: smooth; 
-    background: var(--bg); /* Dark base color moved to html */
-  }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
   
   body {
     font-family: 'DM Sans', sans-serif;
-    background: transparent; /* Body transparent rakha taki background dikhe */
+    background: var(--bg);
     color: var(--text);
     overflow-x: hidden;
-    cursor: none;
+    cursor: none; /* Custom cursor for desktop */
   }
 
-  /* --- SPIDER-MAN BACKGROUND (Aapki Requirement) --- */
+  /* --- SPIDER-MAN BACKGROUND --- */
   #spidey-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    /* High Quality Spider-Man Background Image */
     background-image: url('https://images.unsplash.com/photo-1635805737707-575885ab0820?q=80&w=1920&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    /* Opacity thodi kam rakhi hai taki aapke dark theme par achha lage */
     opacity: 0.18; 
-    /* Selected logic from Canvas: image ko peeche bhejney aur clicks disturb na karne ke liye */
     z-index: -999; 
     pointer-events: none; 
+  }
+
+  /* --- USER PIC REVEAL BACKGROUND --- */
+  #user-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('image_4a6e97.jpg'); /* Aapki photo */
+    background-size: cover;
+    background-position: center 15%; /* Face focus me rakhne ke liye */
+    background-repeat: no-repeat;
+    opacity: 0.4; /* Spider se thoda zyada bright taaki clearly dikhe */
+    z-index: -998; /* Spidey ke ekdum upar */
+    pointer-events: none;
+    /* CSS Magic: Cursor ke aas paas hi sirf image dikhegi */
+    -webkit-mask-image: radial-gradient(circle 180px at var(--mouse-x, -500px) var(--mouse-y, -500px), black 40%, transparent 100%);
+    mask-image: radial-gradient(circle 180px at var(--mouse-x, -500px) var(--mouse-y, -500px), black 40%, transparent 100%);
+    transition: opacity 0.2s ease-out;
   }
 
   /* Custom cursor */
@@ -89,10 +103,10 @@
 
   /* NAV */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
     display: flex; justify-content: space-between; align-items: center;
     padding: 1.25rem 4rem;
-    background: rgba(10,10,15,0.7);
+    background: rgba(10,10,15,0.85);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
   }
@@ -100,6 +114,7 @@
     font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem;
     color: var(--accent); letter-spacing: 0.05em;
     text-decoration: none;
+    z-index: 1001;
   }
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a {
@@ -109,12 +124,38 @@
   }
   .nav-links a:hover { color: var(--accent); }
 
+  /* Mobile Menu Button */
+  .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+  .mobile-menu-btn span {
+    display: block;
+    width: 28px;
+    height: 2px;
+    background-color: var(--text);
+    transition: all 0.3s ease-in-out;
+    border-radius: 2px;
+  }
+  .mobile-menu-btn.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-menu-btn.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
   /* HERO */
   .hero {
     min-height: 100vh; display: flex; align-items: center;
     padding: 0 4rem; position: relative; z-index: 1;
   }
-  .hero-inner { max-width: 900px; }
+  .hero-inner { max-width: 900px; padding-top: 5rem; }
   .hero-tag {
     display: inline-flex; align-items: center; gap: 8px;
     font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
@@ -150,7 +191,7 @@
     font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
     cursor: none; text-decoration: none;
     transition: background 0.2s, transform 0.2s;
-    display: inline-block;
+    display: inline-block; text-align: center;
   }
   .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
   .btn-outline {
@@ -159,7 +200,7 @@
     font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
     cursor: none; text-decoration: none;
     transition: border-color 0.2s, transform 0.2s, background 0.2s;
-    display: inline-block;
+    display: inline-block; text-align: center;
   }
   .btn-outline:hover { border-color: var(--accent); background: rgba(167,139,250,0.06); transform: translateY(-2px); }
 
@@ -378,26 +419,76 @@
   .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* Mobile */
+  /* =========================================
+     MOBILE RESPONSIVENESS (MEDIA QUERIES)
+     ========================================= */
   @media (max-width: 900px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
-    .hero { padding: 0 1.5rem; }
+    /* Navbar adjustments */
+    nav { padding: 1.2rem 1.5rem; }
+    
+    /* Mobile Menu Toggle */
+    .mobile-menu-btn { display: flex; }
+    
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: -100%; /* Hidden by default */
+      width: 250px;
+      height: 100vh;
+      background: rgba(17, 17, 24, 0.95);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: 0.4s ease-in-out;
+      border-left: 1px solid var(--border);
+    }
+    .nav-links.active {
+      right: 0; /* Slide in */
+    }
+    .nav-links a {
+      font-size: 1.2rem;
+      padding: 1rem;
+      display: block;
+    }
+
+    /* Section adjustments */
+    .hero { padding: 0 1.5rem; min-height: 90vh; }
     section { padding: 5rem 1.5rem; }
+    .hero h1 { font-size: clamp(2.8rem, 10vw, 4rem); }
+    .hero-scroll { display: none; } /* Hide text scroll on mobile */
+    .blob { width: 400px; height: 400px; right: -20%; }
+
+    /* Grid single column for mobile */
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
     .skills-categories { grid-template-columns: 1fr; }
     .projects-grid { grid-template-columns: 1fr; }
     .edu-grid { grid-template-columns: 1fr; }
     .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
-    footer { flex-direction: column; gap: 1rem; text-align: center; }
-    .hero-scroll { display: none; }
+    
+    /* Footer */
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+  }
+
+  /* Extra Small Devices (Phones under 480px) */
+  @media (max-width: 480px) {
+    .about-stats { grid-template-columns: 1fr; gap: 1rem; }
+    .stat-card { padding: 1.25rem; }
+    section { padding: 4rem 1.25rem; }
+    .hero h1 { font-size: 2.8rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- YE RAHA AAPKA NAYA SPIDER-MAN BACKGROUND DIV -->
+<!-- STATIC SPIDER-MAN BACKGROUND -->
 <div id="spidey-bg"></div>
+
+<!-- USER PIC REVEAL LAYER -->
+<div id="user-bg"></div>
+
+<!-- INTERACTIVE SPIDER WEB CANVAS -->
+<canvas id="spiderCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-trail" id="cursorTrail"></div>
@@ -405,7 +496,13 @@
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#hero">DN</a>
-  <ul class="nav-links">
+  <!-- Hamburger Mobile Menu Button -->
+  <div class="mobile-menu-btn" id="mobileMenuBtn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
@@ -443,14 +540,14 @@
   </div>
   <div class="about-grid">
     <div class="about-text reveal">
-      <p>I'm a passionate Full Stack Developer based in Mansa, Gujarat, currently pursuing my MCA at LDRP-ITR College. I love building things that live on the internet — from interactive UIs to powerful backend systems.</p>
-      <p>My expertise spans the MERN stack, Python/Django, and AWS Cloud deployments. I believe great software is not just functional — it's fast, scalable, and a joy to use.</p>
-      <p>I'm looking to join a progressive team where I can keep growing, ship impactful products, and collaborate with driven people.</p>
+      <p>Hi! I'm Devanshi, a web developer from Mansa, Gujarat. I'm currently doing my MCA at LDRP-ITR College. I really enjoy writing code and turning ideas into real, working websites.</p>
+      <p>Most of my time goes into working with the MERN stack, Python, Django, and figuring out AWS deployments. I like keeping my code clean and making sure the applications I build are fast and easy to use.</p>
+      <p>Right now, I'm looking for a great opportunity where I can work on real-world projects, learn from an experienced team, and keep growing as a developer.</p>
     </div>
     <div class="about-stats reveal">
       <div class="stat-card">
-        <div class="stat-num">2+</div>
-        <div class="stat-label">Years Experience</div>
+        <div class="stat-num">1</div>
+        <div class="stat-label">Year Experience</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">3+</div>
@@ -548,10 +645,10 @@
       <div class="timeline-company">Persist IT Services Pvt Ltd</div>
       <div class="timeline-role">Full Stack Developer</div>
       <ul class="timeline-points">
-        <li>React.js frontend aur Node.js/Express.js backend ke saath dynamic web applications develop aur maintain ki</li>
-        <li>AWS Cloud par deployments spearhead ki — EC2 instances configure karke live server environments manage kiye</li>
-        <li>MongoDB/SQL database solutions integrate ki aur client-server ke beech secure, optimized data flow ensure kiya</li>
-        <li>Cross-functional collaboration se application performance aur scalability significantly improve ki</li>
+        <li>Developed and maintained dynamic web applications using React.js frontend and Node.js/Express.js backend.</li>
+        <li>Spearheaded deployments on AWS Cloud — configured EC2 instances and managed live server environments.</li>
+        <li>Integrated MongoDB/SQL database solutions and ensured secure, optimized data flow between client and server.</li>
+        <li>Significantly improved application performance and scalability through cross-functional collaboration.</li>
       </ul>
     </div>
     <div class="timeline-item reveal">
@@ -560,10 +657,10 @@
       <div class="timeline-company">Accrete Info Solution Technologies LLP</div>
       <div class="timeline-role">Web Developer Trainee</div>
       <ul class="timeline-points">
-        <li>Python aur Django se Online Hotel Room Booking System ka full stack development lead kiya</li>
-        <li>HTML5, CSS, Bootstrap use karke fully responsive UI design ki jo sab devices par perfect dikhti hai</li>
-        <li>MySQL/SQLite mein room availability checking ke liye complex database logic implement kiya</li>
-        <li>Strict deadlines mein high-quality coding standards maintain karte hue project successfully deliver kiya</li>
+        <li>Led the full-stack development of an Online Hotel Room Booking System using Python and Django.</li>
+        <li>Designed a fully responsive UI using HTML5, CSS, and Bootstrap, ensuring perfect rendering across all devices.</li>
+        <li>Implemented complex database logic in MySQL/SQLite for real-time room availability checking.</li>
+        <li>Successfully delivered the project within strict deadlines while maintaining high-quality coding standards.</li>
       </ul>
     </div>
   </div>
@@ -641,11 +738,11 @@
   <div class="contact-wrap">
     <div class="contact-info reveal">
       <p style="color:var(--muted); font-size:1rem; line-height:1.8; margin-bottom:1rem;">
-        Naye opportunities ke liye open hoon — freelance, full-time, ya collaboration. Feel free to reach out!
+        I'm open to new opportunities — freelance, full-time, or collaboration. Feel free to reach out!
       </p>
       <div class="contact-line">
         <div class="icon">📱</div>
-        <span>+91 9879362175</span>
+        <span>+91 9875247771</span>
       </div>
       <div class="contact-line">
         <div class="icon">✉️</div>
@@ -672,10 +769,10 @@
         </div>
         <div class="form-group">
           <label class="form-label">Message</label>
-          <textarea class="form-textarea" id="fmsg" placeholder="Aapka message yahaan..."></textarea>
+          <textarea class="form-textarea" id="fmsg" placeholder="Your message here..."></textarea>
         </div>
         <button class="form-btn" type="submit">Send Message →</button>
-        <div class="form-success" id="formSuccess">✓ Message sent! Devanshi will get back to you soon.</div>
+        <div class="form-success" id="formSuccess">✓ Opening WhatsApp... 📱</div>
       </form>
     </div>
   </div>
@@ -688,15 +785,39 @@
 </footer>
 
 <script>
+  // Mobile Menu Toggle Logic
+  const mobileBtn = document.getElementById('mobileMenuBtn');
+  const navLinks = document.getElementById('navLinks');
+
+  mobileBtn.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    mobileBtn.classList.toggle('active');
+  });
+
+  // Close mobile menu when clicking a link
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      mobileBtn.classList.remove('active');
+    });
+  });
+
   // Custom cursor
   const cursor = document.getElementById('cursor');
   const trail = document.getElementById('cursorTrail');
+  const userBg = document.getElementById('user-bg');
+  
   document.addEventListener('mousemove', e => {
     cursor.style.left = e.clientX + 'px';
     cursor.style.top = e.clientY + 'px';
     trail.style.left = e.clientX + 'px';
     trail.style.top = e.clientY + 'px';
+    
+    // Aapki pic ko cursor position par reveal karna
+    userBg.style.setProperty('--mouse-x', e.clientX + 'px');
+    userBg.style.setProperty('--mouse-y', e.clientY + 'px');
   });
+  
   document.querySelectorAll('a, button, .stat-card, .skill-group, .project-card, .edu-card').forEach(el => {
     el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; });
     el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; });
@@ -713,14 +834,112 @@
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
 
-  // Contact form
+  // Contact form — WhatsApp redirect
   document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const msg = document.getElementById('fmsg').value.trim();
+
+    const text = `Hello Devanshi! 👋%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Email:* ${encodeURIComponent(email)}%0A%0A*Message:*%0A${encodeURIComponent(msg)}`;
+    const phone = '919875247771'; // Devanshi ka number (country code 91)
+
     const success = document.getElementById('formSuccess');
     success.style.display = 'block';
     this.reset();
-    setTimeout(() => success.style.display = 'none', 4000);
+
+    setTimeout(() => {
+      success.style.display = 'none';
+      window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+    }, 1000);
   });
+
+  // ===== SPIDER WEB BACKGROUND =====
+  const canvas = document.getElementById('spiderCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, mouse = { x: -9999, y: -9999 };
+  const NODES = 90, CONNECT_DIST = 160, MOUSE_DIST = 200;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  
+  // Track mouse for spider web
+  document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  document.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+  // Create particles
+  const particles = Array.from({ length: NODES }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5,
+    r: Math.random() * 2 + 1
+  }));
+
+  function dist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
+
+  function drawWeb() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Update positions
+    for (const p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+
+      // Mouse repulsion
+      const md = dist(p, mouse);
+      if (md < MOUSE_DIST) {
+        const force = (MOUSE_DIST - md) / MOUSE_DIST * 1.2;
+        p.x += (p.x - mouse.x) / md * force;
+        p.y += (p.y - mouse.y) / md * force;
+      }
+    }
+
+    // Draw web lines
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const d = dist(particles[i], particles[j]);
+        if (d < CONNECT_DIST) {
+          const alpha = (1 - d / CONNECT_DIST) * 0.35;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(167,139,250,${alpha})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+      // Mouse connections
+      const md = dist(particles[i], mouse);
+      if (md < MOUSE_DIST) {
+        const alpha = (1 - md / MOUSE_DIST) * 0.7;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.strokeStyle = `rgba(196,181,253,${alpha})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+    }
+
+    // Draw nodes
+    for (const p of particles) {
+      const md = dist(p, mouse);
+      const glow = md < MOUSE_DIST ? (1 - md / MOUSE_DIST) : 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r + glow * 2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(167,139,250,${0.4 + glow * 0.5})`;
+      ctx.fill();
+    }
+
+    requestAnimationFrame(drawWeb);
+  }
+  drawWeb();
 </script>
 </body>
 </html>
