@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Devanshi Nayi — Full Stack Developer</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<!-- FontAwesome Icons Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 <style>
   :root {
     --bg: #0a0a0f;
@@ -266,9 +268,19 @@
   }
   .skill-group:hover { border-color: var(--accent); transform: translateY(-6px); }
   
-  /* Modern SVG Icons for Skills */
-  .skill-group-icon { margin-bottom: 1rem; color: var(--accent); }
-  .skill-group-icon svg { width: 32px; height: 32px; }
+  /* Custom Neon Icons styling */
+  .skill-group-icon { 
+    font-size: 2.4rem; 
+    margin-bottom: 1.25rem; 
+    color: var(--accent); 
+    text-shadow: 0 0 15px rgba(167,139,250,0.4);
+    transition: all 0.3s ease;
+  }
+  .skill-group:hover .skill-group-icon {
+    transform: translateY(-5px) scale(1.1);
+    color: var(--text);
+    text-shadow: 0 0 25px var(--accent2);
+  }
   
   .skill-group-title {
     font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
@@ -332,9 +344,19 @@
   }
   .project-card:hover { border-color: var(--accent); transform: translateY(-8px); }
   
-  /* Modern SVG Icons for Projects */
-  .project-icon { color: var(--accent2); margin-bottom: 0.5rem; }
-  .project-icon svg { width: 36px; height: 36px; }
+  /* Project Custom Neon Icons */
+  .project-icon { 
+    font-size: 2.2rem; 
+    color: var(--accent2); 
+    margin-bottom: 0.5rem; 
+    text-shadow: 0 0 15px rgba(124,58,237,0.4);
+    transition: all 0.3s ease;
+  }
+  .project-card:hover .project-icon {
+    transform: scale(1.1) rotate(-5deg);
+    color: var(--accent);
+    text-shadow: 0 0 25px var(--accent);
+  }
 
   .project-title {
     font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text);
@@ -380,6 +402,7 @@
     width: 44px; height: 44px; border-radius: 12px;
     background: rgba(167,139,250,0.1); border: 1px solid var(--border);
     display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    color: var(--accent);
     flex-shrink: 0;
   }
   .contact-line a { color: var(--accent3); text-decoration: none; }
@@ -580,7 +603,7 @@
   <div class="skills-categories">
     <div class="skill-group reveal">
       <div class="skill-group-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+        <i class="fa-solid fa-code"></i>
       </div>
       <div class="skill-group-title">Frontend</div>
       <div class="skill-tags">
@@ -592,7 +615,7 @@
     </div>
     <div class="skill-group reveal">
       <div class="skill-group-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+        <i class="fa-solid fa-server"></i>
       </div>
       <div class="skill-group-title">Backend</div>
       <div class="skill-tags">
@@ -605,7 +628,7 @@
     </div>
     <div class="skill-group reveal">
       <div class="skill-group-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+        <i class="fa-solid fa-cloud-arrow-up"></i>
       </div>
       <div class="skill-group-title">Cloud & Infra</div>
       <div class="skill-tags">
@@ -616,7 +639,7 @@
     </div>
     <div class="skill-group reveal">
       <div class="skill-group-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+        <i class="fa-solid fa-database"></i>
       </div>
       <div class="skill-group-title">Databases</div>
       <div class="skill-tags">
@@ -627,7 +650,7 @@
     </div>
     <div class="skill-group reveal">
       <div class="skill-group-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        <i class="fa-solid fa-spider"></i>
       </div>
       <div class="skill-group-title">Architecture</div>
       <div class="skill-tags">
@@ -638,7 +661,7 @@
     </div>
     <div class="skill-group reveal">
       <div class="skill-group-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <i class="fa-solid fa-user-astronaut"></i>
       </div>
       <div class="skill-group-title">Soft Skills</div>
       <div class="skill-tags">
@@ -693,7 +716,7 @@
   <div class="projects-grid">
     <div class="project-card reveal">
       <div class="project-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+        <i class="fa-solid fa-hotel"></i>
       </div>
       <div class="project-title">Hotel Room Booking System</div>
       <div class="project-desc">A full-featured hotel booking platform with room availability checking, booking management, and responsive UI built during my trainee role.</div>
@@ -706,7 +729,7 @@
     </div>
     <div class="project-card reveal">
       <div class="project-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <i class="fa-brands fa-aws"></i>
       </div>
       <div class="project-title">AWS-Deployed Web App</div>
       <div class="project-desc">Production-grade web application deployed on AWS EC2 with live server management, scalable backend APIs, and MongoDB data layer.</div>
@@ -719,7 +742,7 @@
     </div>
     <div class="project-card reveal">
       <div class="project-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <i class="fa-solid fa-network-wired"></i>
       </div>
       <div class="project-title">RESTful API Platform</div>
       <div class="project-desc">Scalable REST API backend with Express.js, secure data flow between client and server, and optimized database queries for performance.</div>
@@ -765,19 +788,19 @@
         I'm open to new opportunities — freelance, full-time, or collaboration. Feel free to reach out!
       </p>
       <div class="contact-line">
-        <div class="icon">📱</div>
+        <div class="icon"><i class="fa-solid fa-mobile-screen"></i></div>
         <span>+91 9875247771</span>
       </div>
       <div class="contact-line">
-        <div class="icon">✉️</div>
+        <div class="icon"><i class="fa-solid fa-envelope"></i></div>
         <a href="mailto:devanshinayi6@gmail.com">devanshinayi6@gmail.com</a>
       </div>
       <div class="contact-line">
-        <div class="icon">💼</div>
+        <div class="icon"><i class="fa-brands fa-linkedin-in"></i></div>
         <a href="https://linkedin.com/in/devanshi-nayi-8a44832bb" target="_blank">linkedin.com/in/devanshi-nayi</a>
       </div>
       <div class="contact-line">
-        <div class="icon">📍</div>
+        <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
         <span>Mansa, Gujarat, India</span>
       </div>
     </div>
